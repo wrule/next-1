@@ -1,21 +1,68 @@
 const AnimatedBackground = () => {
   return (
-    <div className="fixed inset-0 -z-10">
-      {/* 主背景层 */}
-      <div className="absolute inset-0 bg-gradient-to-r from-rose-100 to-teal-100 animate-gradient-slow">
-        {/* 动态渐变层 */}
-        <div className="absolute inset-0 bg-gradient-to-r from-violet-200/40 via-transparent to-fuchsia-200/40 animate-gradient-medium" />
-        
-        {/* 呼吸光晕 */}
-        <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-200/30 rounded-full blur-3xl animate-pulse-slow" />
-          <div className="absolute top-1/3 right-1/3 w-96 h-96 bg-purple-200/30 rounded-full blur-3xl animate-pulse-delay" />
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-pink-200/30 rounded-full blur-3xl animate-pulse-slow" />
-        </div>
-        
-        {/* 微光效果 */}
-        <div className="absolute inset-0 bg-gradient-to-t from-white/5 to-transparent animate-shimmer" />
+    <div className="fixed inset-0 -z-10 overflow-hidden">
+      {/* 主动态背景 */}
+      <div 
+        className="
+          absolute inset-0 
+          bg-[length:400%_400%]
+          animate-gradient-x
+          bg-gradient-to-r from-violet-300 via-blue-300 to-violet-300
+        "
+      />
+      
+      {/* 交叉渐变层 */}
+      <div 
+        className="
+          absolute inset-0 
+          bg-[length:400%_400%]
+          animate-gradient-y
+          bg-gradient-to-b from-transparent via-fuchsia-200/30 to-transparent
+        "
+      />
+
+      {/* 动态光斑 */}
+      <div className="absolute inset-0">
+        <div 
+          className="
+            absolute -left-20 top-1/4 
+            w-72 h-72 
+            bg-blue-400/30 
+            rounded-full 
+            blur-3xl
+            animate-blob-spin
+          "
+        />
+        <div 
+          className="
+            absolute -right-20 top-1/3 
+            w-72 h-72 
+            bg-purple-400/30 
+            rounded-full 
+            blur-3xl
+            animate-blob-spin-slow
+          "
+        />
+        <div 
+          className="
+            absolute left-1/3 bottom-1/4 
+            w-72 h-72 
+            bg-pink-400/30 
+            rounded-full 
+            blur-3xl
+            animate-blob
+          "
+        />
       </div>
+
+      {/* 闪光效果层 */}
+      <div 
+        className="
+          absolute inset-0 
+          bg-gradient-to-t from-white/10 to-transparent 
+          animate-shine
+        "
+      />
     </div>
   );
 };
