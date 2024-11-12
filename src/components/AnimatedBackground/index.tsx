@@ -1,66 +1,77 @@
+
 const AnimatedBackground = () => {
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden">
-      {/* 主动态背景 */}
+    <div className="fixed inset-0 -z-10 overflow-hidden bg-gradient-to-br from-primary-100/50 to-purple-100/40">
+      {/* 主动态背景 - 优雅的双色渐变 */}
       <div 
         className="
           absolute inset-0 
           bg-[length:400%_400%]
           animate-gradient-x
-          bg-gradient-to-r from-violet-300 via-blue-300 to-violet-300
+          bg-gradient-to-r from-primary-200/30 via-purple-200/25 to-primary-200/30
         "
       />
       
-      {/* 交叉渐变层 */}
-      <div 
-        className="
-          absolute inset-0 
-          bg-[length:400%_400%]
-          animate-gradient-y
-          bg-gradient-to-b from-transparent via-fuchsia-200/30 to-transparent
-        "
-      />
-
-      {/* 动态光斑 */}
+      {/* 动态光斑层 */}
       <div className="absolute inset-0">
+        {/* 明亮的黄色光斑 */}
         <div 
           className="
-            absolute -left-20 top-1/4 
-            w-72 h-72 
-            bg-blue-400/30 
-            rounded-full 
-            blur-3xl
-            animate-blob-spin
-          "
-        />
-        <div 
-          className="
-            absolute -right-20 top-1/3 
-            w-72 h-72 
-            bg-purple-400/30 
-            rounded-full 
-            blur-3xl
-            animate-blob-spin-slow
-          "
-        />
-        <div 
-          className="
-            absolute left-1/3 bottom-1/4 
-            w-72 h-72 
-            bg-pink-400/30 
+            absolute left-[10%] top-[15%]
+            w-[600px] h-[600px] 
+            bg-gradient-to-br from-primary-300/40 via-primary-200/35 to-primary-100/30
             rounded-full 
             blur-3xl
             animate-blob
+            mix-blend-soft-light
+          "
+        />
+        {/* 大型紫色光斑 */}
+        <div 
+          className="
+            absolute right-[10%] bottom-[15%]
+            w-[800px] h-[800px] 
+            bg-gradient-to-tr from-purple-400/25 via-purple-300/20 to-purple-200/15
+            rounded-full 
+            blur-[100px]
+            animate-blob-reverse
+            mix-blend-soft-light
           "
         />
       </div>
 
-      {/* 闪光效果层 */}
+      {/* 额外的装饰光斑 */}
+      <div className="absolute inset-0">
+        <div 
+          className="
+            absolute left-[60%] top-[60%]
+            w-[300px] h-[300px]
+            bg-gradient-to-r from-primary-200/20 to-transparent
+            rounded-full
+            blur-2xl
+            animate-float
+            mix-blend-soft-light
+          "
+        />
+        <div 
+          className="
+            absolute right-[60%] bottom-[60%]
+            w-[250px] h-[250px]
+            bg-gradient-to-l from-purple-300/15 to-transparent
+            rounded-full
+            blur-2xl
+            animate-float-reverse
+            mix-blend-soft-light
+          "
+        />
+      </div>
+
+      {/* 微妙的纹理层 */}
       <div 
         className="
           absolute inset-0 
-          bg-gradient-to-t from-white/10 to-transparent 
-          animate-shine
+          bg-gradient-to-t from-white/[0.02] to-transparent
+          mix-blend-overlay
         "
       />
     </div>
