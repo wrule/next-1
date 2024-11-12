@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect, useCallback } from 'react';
+import ConnectButton from '../ConnectButton';
 
 interface ScrollState {
   isVisible: boolean;
@@ -89,6 +90,8 @@ const Header = () => {
               </a>
             ))}
           </nav>
+
+          <ConnectButton />
         </div>
       </div>
     </header>
