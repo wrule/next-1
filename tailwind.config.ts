@@ -44,6 +44,7 @@ const config: Config = {
         'gradient-x': 'gradient-x 15s ease infinite',
         'float': 'float 20s ease-in-out infinite',
         'float-reverse': 'float-reverse 22s ease-in-out infinite',
+        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
       keyframes: {
         'blob': {
