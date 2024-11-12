@@ -1,6 +1,15 @@
 const ConnectButton = () => {
   return (
     <button
+      onClick={async () => {
+        if (!window.ethereum) {
+          alert('请先安装钱包');
+          return;
+        }
+
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        console.log(accounts);
+      }}
       className="
         relative group
         px-6 py-2.5
