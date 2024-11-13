@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 const useEthereum = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [accounts, setAccounts] = useState<string[]>([]);
   const [currentChainCode, setCurrentChainCode] = useState<string>('');
+
+  const connected = useMemo(() => accounts.length > 0, [accounts]);
 
   const ethereum = window.ethereum!;
 
@@ -42,36 +44,27 @@ const useEthereum = () => {
     setCurrentChainCode(chainCode);
   };
 
-  const handleAccountsChanged = (...args: any[]) => {
-    setAccounts(args);
+  const handleAccountsChanged = (accounts: string[]) => {
+    setAccounts(accounts);
   };
-
-  // const timer = setInterval(() => {
-  //   if (window.ethereum) {
-  //     const a = (window.ethereum as any).isConnected();
-  //     console.log(a);
-  //   }
-  // }, 1000);
 
   useEffect(() => {
     fillBaseInfo();
-    if (window.ethereum) {
-      window.ethereum.on('connect', handleConnect);
-      window.ethereum.on('disconnect', handleDisconnect);
-      window.ethereum.on('chainChanged', handleChainChanged);
-      window.ethereum.on('accountsChanged', handleAccountsChanged);
-      return () => {
-        window.ethereum?.removeListener('connect', handleConnect);
-        window.ethereum?.removeListener('disconnect', handleDisconnect);
-        window.ethereum?.removeListener('chainChanged', handleChainChanged);
-        window.ethereum?.removeListener('accountsChanged', handleAccountsChanged);
-        // clearInterval(timer);
-      };
-    }
+    ethereum.on('connect', handleConnect);
+    ethereum.on('disconnect', handleDisconnect);
+    ethereum.on('chainChanged', handleChainChanged);
+    ethereum.on('accountsChanged', handleAccountsChanged);
+    return () => {
+      ethereum.removeListener('connect', handleConnect);
+      ethereum.removeListener('disconnect', handleDisconnect);
+      ethereum.removeListener('chainChanged', handleChainChanged);
+      ethereum.removeListener('accountsChanged', handleAccountsChanged);
+    };
   }, []);
 
   return {
     loading,
+    connected,
     accounts,
     currentChainCode,
   };
