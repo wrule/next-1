@@ -1,11 +1,13 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 const useEthereum = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [accounts, setAccounts] = useState<string[]>([]);
   const [currentChainCode, setCurrentChainCode] = useState<string>('');
+  const [balance, setBalance] = useState<string>('');
 
   const connected = useMemo(() => accounts.length > 0, [accounts]);
+  const mainAccount = useMemo(() => accounts[0], [accounts]);
 
   const ethereum = window.ethereum!;
 
@@ -18,6 +20,14 @@ const useEthereum = () => {
     const response = await ethereum.request({ method: 'eth_chainId' });
     setCurrentChainCode(response);
   };
+
+  const fillBalance = useCallback(async () => {
+    const response = await ethereum.request({
+      method: 'eth_getBalance',
+      params: [mainAccount, 'latest'],
+    });
+    console.log(response);
+  }, [mainAccount]);
 
   const fillBaseInfo = async () => {
     setLoading(true);
@@ -47,6 +57,12 @@ const useEthereum = () => {
   const handleAccountsChanged = (accounts: string[]) => {
     setAccounts(accounts);
   };
+
+  useEffect(() => {
+    if (mainAccount) {
+      fillBalance();
+    }
+  }, [mainAccount]);
 
   useEffect(() => {
     fillBaseInfo();
