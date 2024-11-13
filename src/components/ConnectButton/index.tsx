@@ -1,27 +1,14 @@
 import { useEffect } from 'react';
-
+import useEthereum from '@/hooks/useEthereum';
+import AddressDisplay from '../AddressDisplay';
 
 const ConnectButton = () => {
-  const handleConnect = (...args: any[]) => {
-    console.log('connect', args);
-  };
-
-  const handleChainChanged = (...args: any[]) => {
-    console.log('chainChanged', args);
-  };
-
-  useEffect(() => {
-    if (window.ethereum) {
-      window.ethereum.on('connect', handleConnect);
-      window.ethereum.on('chainChanged', handleChainChanged);
-      return () => {
-        window.ethereum?.removeListener('connect', handleConnect);
-        window.ethereum?.removeListener('chainChanged', handleChainChanged);
-      };
-    }
-  }, []);
+  const info = useEthereum();
 
   return (
+    <>
+    <span>{info.currentChainCode}</span>
+    <span>{info.accounts.map((account) => <span>{account}</span>)}</span>
     <button
       onClick={async () => {
         if (!window.ethereum) {
@@ -114,6 +101,7 @@ const ConnectButton = () => {
         transition-opacity duration-300
       "/>
     </button>
+    </>
   );
 };
 
