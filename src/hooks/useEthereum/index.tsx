@@ -21,8 +21,8 @@ const useEthereum = () => {
     setLoading(true);
     try {
       await Promise.all([
-        fillCurrentAccounts,
-        fillCurrentChainCode,
+        fillCurrentAccounts(),
+        fillCurrentChainCode(),
       ]);
     } catch (error) {
       console.error(error);
@@ -46,12 +46,12 @@ const useEthereum = () => {
     setAccounts(args);
   };
 
-  const timer = setInterval(() => {
-    if (window.ethereum) {
-      const a = (window.ethereum as any).isConnected();
-      console.log(a);
-    }
-  }, 1000);
+  // const timer = setInterval(() => {
+  //   if (window.ethereum) {
+  //     const a = (window.ethereum as any).isConnected();
+  //     console.log(a);
+  //   }
+  // }, 1000);
 
   useEffect(() => {
     fillBaseInfo();
@@ -65,12 +65,13 @@ const useEthereum = () => {
         window.ethereum?.removeListener('disconnect', handleDisconnect);
         window.ethereum?.removeListener('chainChanged', handleChainChanged);
         window.ethereum?.removeListener('accountsChanged', handleAccountsChanged);
-        clearInterval(timer);
+        // clearInterval(timer);
       };
     }
   }, []);
 
   return {
+    loading,
     accounts,
     currentChainCode,
   };
