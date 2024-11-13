@@ -1,4 +1,15 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { formatEther, formatUnits } from 'ethers';
+
+const formatBalance = (hexBalance: string) => {
+  const balance = BigInt(hexBalance);
+  
+  // 转换为 ETH (除以 10^18)
+  const ethBalance = Number(balance) / 1e18;
+  
+  // 格式化显示，保留特定位数
+  return ethBalance.toFixed(4);
+};
 
 const useEthereum = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -26,7 +37,7 @@ const useEthereum = () => {
       method: 'eth_getBalance',
       params: [mainAccount, 'latest'],
     });
-    console.log(response);
+    setBalance(response);
   }, [mainAccount]);
 
   const fillBaseInfo = async () => {
@@ -62,7 +73,7 @@ const useEthereum = () => {
     if (mainAccount) {
       fillBalance();
     }
-  }, [mainAccount]);
+  }, [mainAccount, currentChainCode]);
 
   useEffect(() => {
     fillBaseInfo();
@@ -82,6 +93,8 @@ const useEthereum = () => {
     loading,
     connected,
     accounts,
+    mainAccount,
+    balance: Number(formatEther(BigInt(balance))).toFixed(4),
     currentChainCode,
   };
 };
