@@ -1,4 +1,26 @@
+import { useEffect } from 'react';
+
+
 const ConnectButton = () => {
+  const handleConnect = (...args: any[]) => {
+    console.log('connect', args);
+  };
+
+  const handleChainChanged = (...args: any[]) => {
+    console.log('chainChanged', args);
+  };
+
+  useEffect(() => {
+    if (window.ethereum) {
+      window.ethereum.on('connect', handleConnect);
+      window.ethereum.on('chainChanged', handleChainChanged);
+      return () => {
+        window.ethereum?.removeListener('connect', handleConnect);
+        window.ethereum?.removeListener('chainChanged', handleChainChanged);
+      };
+    }
+  }, []);
+
   return (
     <button
       onClick={async () => {
@@ -6,7 +28,6 @@ const ConnectButton = () => {
           alert('请先安装钱包');
           return;
         }
-
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         console.log(accounts);
       }}
