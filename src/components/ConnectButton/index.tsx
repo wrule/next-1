@@ -7,10 +7,6 @@ const ConnectButton = () => {
 
   return (
     <>
-    <span>{info.loading ? '加载中' : '加载完成'}</span>
-    <span>{info.connected ? '已经连接' : '未连接'}</span>
-    <span>{info.currentChainCode}</span>
-    <span>{info.accounts.map((account, index) => <span key={`span-${index}`}>{account}</span>)}</span>
     <button
       onClick={async () => {
         if (!window.ethereum) {
