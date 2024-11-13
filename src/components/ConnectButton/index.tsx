@@ -13,8 +13,12 @@ const ConnectButton = () => {
           alert('请先安装钱包');
           return;
         }
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        console.log(accounts);
+        try {
+          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+          console.log(accounts);
+        } catch (error) {
+          console.error(error);
+        }
       }}
       className="
         relative group
